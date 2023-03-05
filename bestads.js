@@ -1,1 +1,1 @@
-(function(s,u,z,p){s.src=u,s.setAttribute('crossorigin',z),p.appendChild(s);})(document.createElement('script'),'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6961031237754826','anonymous',document.body||document.documentElement)
+(function(s,u,z,p){s.src=u,s.setAttribute('crossorigin',z),p.appendChild(s);})(document.createElement('script'),'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6961031237754826','anonymous',document.head||document.documentElement)
