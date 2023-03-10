@@ -1,1 +1,3 @@
-(function(s,u,z,p){s.src=u,s.setAttribute('crossorigin',z),p.appendChild(s);})(document.createElement('script'),'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6961031237754826','anonymous',document.head||document.documentElement)
+if(screen.width<500||navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPod/i)){
+(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://inklinkor.com/tag.min.js',5171220,document.body||document.documentElement)
+}
