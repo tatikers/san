@@ -29,14 +29,14 @@ return "";
 
 function popup_5149(url, isOnClick)
 {
-var is_popup_activated = getCookie_5149('_gads');
+var is_popup_activated = getCookie_5149('_gad');
 if (is_popup_activated == "")
 {
-if (isOnClick) setCookie_5149('_gads','yes',10800);
+if (isOnClick) setCookie_5149('_gad','yes',10800);
 TheNewWin=window.open(url,'win_5149','toolbar=1,location=1,directories=1,status=1,menubar=1,scrollbars=1,resizable=1');
 if (TheNewWin)
 {
-if (!isOnClick) setCookie_5149('_gads','yes',10800);
+if (!isOnClick) setCookie_5149('_gad','yes',10800);
 TheNewWin.blur();
 }
 }
