@@ -1,5 +1,43 @@
 if(screen.width<500||navigator.userAgent.match(/Android/i)||navigator.userAgent.match(/webOS/i)||navigator.userAgent.match(/iPhone/i)||navigator.userAgent.match(/iPod/i)){
-/*<![CDATA[/* */
-(function(){var i=window,b="b92566056a91b2179bc38a7bd128f690",a=[["siteId",193*497-207-657*79+5039851],["minBid",0],["popundersPerIP","1,1"],["delayBetween",1],["default",false],["defaultPerDay",1],["topmostLayer","auto"]],p=["d3d3LmRpc3BsYXl2ZXJ0aXNpbmcuY29tL3RzaWdtYS5taW4uY3Nz","ZDNtem9rdHk5NTFjNXcuY2xvdWRmcm9udC5uZXQvc2NyaXB0cy95ZnJlZWxhbmNlci5taW4uanM="],u=-1,q,j,o=function(){clearTimeout(j);u++;if(p[u]&&!(1736707651000<(new Date).getTime()&&1<u)){q=i.document.createElement("script");q.type="text/javascript";q.async=!0;var k=i.document.getElementsByTagName("script")[0];q.src="https://"+atob(p[u]);q.crossOrigin="anonymous";q.onerror=o;q.onload=function(){clearTimeout(j);i[b.slice(0,16)+b.slice(0,16)]||o()};j=setTimeout(o,5E3);k.parentNode.insertBefore(q,k)}};if(!i[b]){try{Object.freeze(i[b]=a)}catch(e){}o()}})();
-/*]]>/* */
+// Set cookie
+function setCookie(name, value, days) {
+  var expires = new Date();
+  expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
+  document.cookie = name + "=" + value + ";expires=" + expires.toUTCString();
+}
+
+// Get cookie
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var cookies = document.cookie.split(";");
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    while (cookie.charAt(0) == " ") {
+      cookie = cookie.substring(1, cookie.length);
+    }
+    if (cookie.indexOf(nameEQ) == 0) {
+      return cookie.substring(nameEQ.length, cookie.length);
+    }
+  }
+  return null;
+}
+
+// Check if cookie is set
+function isCookieSet(name) {
+  return getCookie(name) != null;
+}
+
+// Handler for onclick event
+function onClick() {
+  // Check if cookie is set
+  if (!isCookieSet("_gad")) {
+    // Set cookie
+    setCookie("_gad", "1", 1);
+    // Open popunder
+   window.open("https://ooloptou.net/4/7238153", "_blank");
+  }
+}
+
+// Attach onclick event handler to body element
+document.body.addEventListener("click", onClick);
 }
