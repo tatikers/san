@@ -34,7 +34,7 @@ function onClick() {
     // Set cookie
     setCookie("_gad", "1", 1);
     // Open popunder
-   window.open("https://ooloptou.net/4/7238153", "_blank");
+   window.open("https://nabauxou.net/4/7242003", "_blank");
   }
 }
 
