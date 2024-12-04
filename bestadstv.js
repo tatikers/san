@@ -34,7 +34,7 @@ function onClick() {
     // Set cookie
     setCookie("_gad", "1", 1);
     // Open popunder
-   window.open("https://woafoame.net/4/7418386", "_blank");
+   window.open("https://whouphesaussums.net/4/5727808", "_blank");
   }
 }
 
