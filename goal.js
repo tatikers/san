@@ -1,58 +1,69 @@
-if (
-  screen.width < 500 ||
-  navigator.userAgent.match(/Android/i) ||
-  navigator.userAgent.match(/webOS/i) ||
-  navigator.userAgent.match(/iPhone/i) ||
-  navigator.userAgent.match(/iPod/i)
-) {
-  // Cek apakah ini halaman index/home
+(function () {
+  const isMobile =
+    screen.width < 500 ||
+    /Android|webOS|iPhone|iPod/i.test(navigator.userAgent);
+  if (!isMobile) return;
+
   const path = window.location.pathname;
   const isHomePage =
-    path === "/" ||
-    path === "/index.html" ||
-    path === "/index.php" ||
-    path === "";
+    path === "/" || path === "/index.html" ||
+    path === "/index.php" || path === "";
+  if (isHomePage) return;
 
-  if (!isHomePage) {
-    // Fungsi cek apakah popunder sudah muncul hari ini
-    function isPopunderShownToday() {
-      const data = localStorage.getItem("popunder_shown");
-      if (!data) return false;
+  const storage = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); return true; } catch { return false; } },
+  };
 
-      try {
-        const parsed = JSON.parse(data);
-        const now = new Date();
-        const lastShown = new Date(parsed.date);
-        return (
-          now.getFullYear() === lastShown.getFullYear() &&
-          now.getMonth() === lastShown.getMonth() &&
-          now.getDate() === lastShown.getDate()
-        );
-      } catch (e) {
-        return false;
-      }
-    }
+  function isPopunderShownToday() {
+    const data = storage.get("popunder_shown");
+    if (!data) return false;
+    try {
+      const p = JSON.parse(data);
+      const now = new Date(), last = new Date(p.date);
+      return now.getFullYear() === last.getFullYear() &&
+             now.getMonth() === last.getMonth() &&
+             now.getDate() === last.getDate();
+    } catch { return false; }
+  }
 
-    // Tandai bahwa popunder sudah ditampilkan
-    function markPopunderShown() {
-      const now = new Date();
-      localStorage.setItem(
-        "popunder_shown",
-        JSON.stringify({ date: now.toISOString() })
-      );
-    }
+  function markPopunderShown() {
+    storage.set("popunder_shown", JSON.stringify({ date: new Date().toISOString() }));
+  }
 
-    // Flag untuk mencegah klik berulang
-    let alreadyClicked = false;
+  if (isPopunderShownToday()) return;
 
-    if (!isPopunderShownToday()) {
-      document.body.addEventListener("click", function () {
-        if (alreadyClicked) return;
-        alreadyClicked = true;
+  function isInteractive(el) {
+    if (!el || typeof el.closest !== "function") return false;
+    return el.closest(
+      'a, button, input, textarea, select, label, [role="button"], [onclick]'
+    );
+  }
 
-        markPopunderShown();
-        window.open("https://hai8g.com/4/12177271", "_blank");
-      });
+  let triggered = false;
+  let cooldownUntil = 0;
+
+  function handler(e) {
+    if (triggered) return;
+    if (Date.now() < cooldownUntil) return;
+    if (isInteractive(e.target)) return;
+
+    triggered = true;
+
+    const win = window.open(
+      "https://hai8g.com/4/12177271", // ganti!
+      "_blank"
+    );
+
+    if (win) {
+      markPopunderShown();
+    } else {
+      // popup diblokir → cooldown 30 detik, jangan spam
+      cooldownUntil = Date.now() + 30000;
+      triggered = false;
     }
   }
-}
+
+  const target = document.body || document.documentElement;
+  target.addEventListener("click", handler); // TANPA passive:true
+})();
