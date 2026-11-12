@@ -8,7 +8,7 @@
 
    const SMARTLINK_URL = "https://hai8g.com/4/12177271";
 
-  const MIN_TIME = 10000; // 10 detik
+  const MIN_TIME = 20000; // 10 detik
   const COOLDOWN = 30000; // 30 detik
 
   const STORAGE_KEY = "smartlink_opened_date";
