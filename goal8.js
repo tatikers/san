@@ -6,7 +6,7 @@
   // CONFIGURATION
   // =====================================
 
-  const SMARTLINK_URL = "https://hai8g.com/4/12177271";
+   const SMARTLINK_URL = "https://hai8g.com/4/12177271";
 
   const MIN_TIME = 10000; // 10 detik
   const COOLDOWN = 30000; // 30 detik
@@ -22,6 +22,16 @@
   ];
 
   // =====================================
+  // PREVENT DOUBLE INITIALIZATION
+  // =====================================
+
+  const SCRIPT_KEY = "__smartlink_popunder_v3__";
+
+  if (window[SCRIPT_KEY]) return;
+
+  window[SCRIPT_KEY] = true;
+
+  // =====================================
   // MOBILE ONLY
   // =====================================
 
@@ -32,12 +42,6 @@
     );
 
   if (!isMobile) return;
-
-  // =====================================
-  // EXCLUDE HOMEPAGE
-  // =====================================
-
-
 
   // =====================================
   // COOKIE CHECK
@@ -55,12 +59,10 @@
     );
   }
 
-  // Jika salah satu cookie ditemukan,
-  // hentikan seluruh script.
   if (hasExcludedCookie()) return;
 
   // =====================================
-  // LOCAL STORAGE
+  // LOCAL DATE
   // =====================================
 
   function today() {
@@ -75,6 +77,10 @@
     );
   }
 
+  // =====================================
+  // STORAGE
+  // =====================================
+
   function alreadyOpenedToday() {
     try {
       return (
@@ -88,7 +94,10 @@
   function markOpened() {
     try {
       localStorage.setItem(STORAGE_KEY, today());
-    } catch {}
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   if (alreadyOpenedToday()) return;
@@ -100,10 +109,9 @@
   let pageReady = false;
   let userInteracted = false;
   let triggered = false;
-  let cooldownUntil = 0;
 
-  // Minimal waktu berada di halaman
-  setTimeout(() => {
+  // Tunggu minimal 10 detik
+  setTimeout(function () {
     pageReady = true;
   }, MIN_TIME);
 
@@ -118,13 +126,19 @@
   document.addEventListener(
     "scroll",
     registerInteraction,
-    { passive: true, once: true }
+    {
+      passive: true,
+      once: true
+    }
   );
 
   document.addEventListener(
     "touchstart",
     registerInteraction,
-    { passive: true, once: true }
+    {
+      passive: true,
+      once: true
+    }
   );
 
   // =====================================
@@ -150,39 +164,32 @@
   // =====================================
 
   function handleClick(e) {
+
     if (triggered) return;
 
-    if (Date.now() < cooldownUntil) return;
-
-    // Harus menunggu minimal 10 detik
     if (!pageReady) return;
 
-    // Harus sudah ada interaksi
     if (!userInteracted) return;
 
-    // Jangan ganggu klik elemen interaktif
     if (isInteractive(e.target)) return;
 
+    // Tandai agar tidak dipanggil berkali-kali
     triggered = true;
 
-    const popup = window.open(
+    // Simpan sebelum membuka smartlink
+    markOpened();
+
+    // Buka smartlink
+    window.open(
       SMARTLINK_URL,
       "_blank"
     );
 
-    if (popup) {
-      markOpened();
-
-      document.removeEventListener(
-        "click",
-        handleClick
-      );
-    } else {
-      // Popup diblokir browser
-      cooldownUntil = Date.now() + COOLDOWN;
-
-      triggered = false;
-    }
+    // Hapus event listener
+    document.removeEventListener(
+      "click",
+      handleClick
+    );
   }
 
   // =====================================
